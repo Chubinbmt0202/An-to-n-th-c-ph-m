@@ -11,10 +11,16 @@ const addUser = async (user) => {
     return result.insertId;
 };
 
-const findUserByUsername = async (username) => {
-    const [rows] = await db.query('SELECT * FROM nguoidung WHERE Cccd = ?', [username]);
-    console.log(rows[0])
-    return rows[0];
+const findUserByUsername = async (cccd) => {
+    const [rows] = await db.query('SELECT * FROM nguoidung WHERE Cccd = ?', [cccd]);
+
+    if (rows.length === 0) {
+        console.log("Không có dữ liệu người dùng nào được tìm thấy.");
+        return null;
+    } else {
+        console.log(rows[0]);
+        return rows[0];
+    }
 };
 
 const getDriverModel = async () => {

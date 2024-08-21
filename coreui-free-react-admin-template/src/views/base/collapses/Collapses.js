@@ -3,13 +3,16 @@ import {
   CButton,
   CCard,
   CCardBody,
+  CFormCheck,
   CCardFooter,
+  CContainer,
   CCardGroup,
   CCardHeader,
   CModalBody,
   CCardImage,
   CCardLink,
   CCardSubtitle,
+  CFormTextarea,
   CCardText,
   CCardTitle,
   CListGroup,
@@ -45,16 +48,17 @@ import '../../base/collapses/Collapses.css'
 const Collapses = () => {
   const [visible, setVisible] = useState(false)
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
-  const [visibleA, setVisibleA] = useState(false)
-  const [visibleB, setVisibleB] = useState(false)
-
+  const [visibleStatus, setVisibleStatus] = useState(false)
+  const handleViewStatus = () => {
+    setVisibleStatus(true)
+  }
   return (
     <CRow>
       <CCol xs={12}>
         <CCard>
           <CCardHeader className="my-custom-button">
             <strong>Danh sách thanh tra</strong>
-            <CButton className="ml-3" color="secondary">
+            <CButton className="ml-3" color="secondary" onClick={() => handleViewStatus()}>
               Tạo kế hoạch thanh tra
             </CButton>
           </CCardHeader>
@@ -95,6 +99,45 @@ const Collapses = () => {
           </CCardBody>
         </CCard>
       </CCol>
+      <CModal
+        size="lg"
+        backdrop="static"
+        visible={visibleStatus}
+        onClose={() => setVisibleStatus(false)}
+        aria-labelledby="StaticBackdropExampleLabel"
+      >
+        <CModalHeader>
+          <CModalTitle id="StaticBackdropExampleLabel">Tạo kế hoạch thanh tra</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CContainer>
+            <CRow className=" justify-content-between">
+              <CForm>
+                <CFormInput id="inputAddress" label="Nhập tên kế hoạch" />
+                <CFormInput
+                  id="inputAddress"
+                  label="Ngày thanh tra"
+                  placeholder="Nhập ngày với định dạng: 2024-07-31"
+                />
+                <CFormInput
+                  id="inputAddress"
+                  label="Thời gian thanh tra"
+                  placeholder="Nhập thời gian với định dạng: 09:12"
+                />
+                <p>Chọn cơ sở muốn thanh tra</p>
+                <CFormCheck id="flexCheckDefault" label="Cơ sở 1 - 12 Đống đa, Hà Nội" />
+                <CFormCheck id="flexCheckDefault" label="Cơ sở 2 - 12 Đống đa, Hà Nội" />
+              </CForm>
+            </CRow>
+          </CContainer>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="primary">Tạo kế hoạch</CButton>
+          <CButton color="secondary" onClick={() => setVisibleStatus(false)}>
+            Đóng
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </CRow>
   )
 }

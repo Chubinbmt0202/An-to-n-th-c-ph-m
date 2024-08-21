@@ -22,6 +22,7 @@ import axios from 'axios'
 const Login = () => {
   const [Username, setUsername] = useState('')
   const [PassWord, setPassword] = useState('')
+  const [IDChucvu, setIDChucvu] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -30,20 +31,24 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:3001/api/login', {
         Username: Username,
-        PassWord: PassWord
+        PassWord: PassWord,
       })
+      console.log('Dữ liệu:', res)
+      setIDChucvu(res.data.user.id)
+      console.log("ID chức vụ:", res.data.user.id)
       if (res.data.error) {
         alert(res.data.error)
       } else {
         localStorage.setItem('username', res.data.user.Username)
+        localStorage.setItem('IDChucvu', res.data.user.id)
         dispatch({ type: 'SET_USER', payload: res.data.user })
         dispatch({ type: 'login' }) // Dispatch login action
-        console.log('Navigating to dashboard')  // Debugging statement
+        console.log('Navigating to dashboard')  // Debugging statemen3b b t
         navigate('/dashboard')
       }
     } catch (error) {
       console.error(error)
-      alert('Login failed. Please check your credentials and try again.')
+      alert('Lỗi hãy thử lại với tài khoản khác')
     }
   }
 
@@ -56,14 +61,14 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onSubmit={handleLogin}>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
+                    <h1>Đăng nhập</h1>
+                    <p className="text-body-secondary">Đăng nhập hệ thống</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
-                        placeholder="Username"
+                        placeholder="Nhập căn cước công dân"
                         autoComplete="username"
                         value={Username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -75,7 +80,7 @@ const Login = () => {
                       </CInputGroupText>
                       <CFormInput
                         type="password"
-                        placeholder="Password"
+                        placeholder="Nhập mật khẩu"
                         autoComplete="current-password"
                         value={PassWord}
                         onChange={(e) => setPassword(e.target.value)}
@@ -84,12 +89,12 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <CButton color="primary" className="px-4" type="submit">
-                          Login
+                          Đăng nhập
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
-                          Forgot password?
+                          Quên mật khẩu?
                         </CButton>
                       </CCol>
                     </CRow>
@@ -99,14 +104,14 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
+                    <h2>Đăng ký</h2>
                     <p>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+                        Tạo tài khoản ngay bây giờ!
                       </CButton>
                     </Link>
                   </div>

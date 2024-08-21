@@ -63,8 +63,15 @@ const Tables = () => {
   const [datadetail, setDataDetail] = useState("")
   const [dataodercus, SetDataOrDerCus] = useState([]);
   const [namesearch, setNameSearch] = useState("");
+  const [IDChucVu, setIDChucVu] = useState(null); // Lưu trữ IDChucVu
 
   useEffect(() => {
+    const storageChucvu = localStorage.getItem("IDChucvu")
+
+    if (storageChucvu) {
+      setIDChucVu(parseInt(storageChucvu, 10));
+    }
+
     const fetchProvinces = async () => {
       try {
         const response = await axios.get('https://vapi.vnappmob.com/api/province')
@@ -224,11 +231,15 @@ const Tables = () => {
                         <CDropdown>
                           <CDropdownToggle color="secondary">Tuỳ chỉnh</CDropdownToggle>
                           <CDropdownMenu>
-                            <CDropdownItem onClick={() => fetchCustomerDetails(item.PK_Ma_KH)}>
+                            <CDropdownItem>
                               Xem chi tiết
                             </CDropdownItem>
-
-                            <CDropdownDivider />
+                            {IDChucVu === 1 && (
+                              <>
+                                <CDropdownItem>Chỉnh sửa</CDropdownItem>
+                                <CDropdownItem>Khoá tài khoản</CDropdownItem>
+                              </>
+                            )}
                           </CDropdownMenu>
                         </CDropdown>
                       </CTableDataCell>

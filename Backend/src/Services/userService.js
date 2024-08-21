@@ -36,20 +36,25 @@ const registerUser = async ({ Username, PassWord, SDT, ID_role }) => {
 
 const loginUser = async ({ Username, PassWord }) => {
   if (!Username || !PassWord) {
-    throw new Error("Username and password are required.");
+    throw new Error("Cccd and password are required.");
   }
 
-  const user = await findUserByUsername(Username);
+  const user = await findUserByUsername(Username); // Truy vấn dựa trên Cccd
+  console.log("log ra tài khoản", user)
   if (!user) {
-    throw new Error("Invalid username or password.");
+    throw new Error("Invalid Cccd.");
   }
 
   if (PassWord !== user.MatKhau) {
-    throw new Error("Invalid username or password.");
+    throw new Error("Invalid Cccd or password.");
   }
 
-  // Return user details or a token (if you are using JWT for authentication)
-  return { id: user.id, Username: user.Username, SDT: user.SDT, ID_role: user.ID_role };
+  if (user.IDChucvu == 3) {
+    throw new Error("Tài khoản này không có tồn tại")
+  }
+
+  // Return user details or a token
+  return { id: user.IDChucvu, Username: user.HoTen, SDT: user.SDT, ID_role: user.ID_role };
 };
 
 const getDriverService = async () => {

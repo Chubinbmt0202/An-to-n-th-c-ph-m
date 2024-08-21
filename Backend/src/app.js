@@ -89,7 +89,6 @@ app.post("/api/rejectOrdera/:id", rejectOrderControllerV)
 app.get("/api/rejection-details/:id", reasonRejectController)
 // Endpoint to handle form submission
 app.post('/api/submit-order', upload.single('file'), async (req, res) => {
-  const IdCoSo = 6;
   const {
     facilityName,
     ownerName,
@@ -102,12 +101,56 @@ app.post('/api/submit-order', upload.single('file'), async (req, res) => {
   const file = req.file;
 
   const filePath = file ? file.path : null;
-  console.log(req.body)
+  console.log(req.body);
   try {
-    await database.query(
-      `INSERT INTO coso (IdCoSo,ChuCoSo, TenCoSo, DiaChi,IdLoaiHinhKinhDoanh) VALUES (?, ?, ?, ?, ?)`,
-      [IdCoSo + 1, ownerName, facilityName, address, 1]
+    // Get the current maximum IdCoSo
+    const [maxCoSoResult] = await database.query(
+      `SELECT COALESCE(MAX(IdCoSo), 0) AS maxIdCoSo FROM coso`
     );
+    const newIdCoSo = maxCoSoResult[0].maxIdCoSo + 1;
+
+    // Insert into CoSo
+    await database.query(
+      `INSERT INTO coso (IdCoSo, ChuCoSo, TenCoSo, DiaChi, IdLoaiHinhKinhDoanh) VALUES (?, ?, ?, ?, ?)`,
+      [newIdCoSo, ownerName, facilityName, address, 1]
+    );
+
+    // Get the current maximum IdHoSo
+    const [maxHoSoResult] = await database.query(
+      `SELECT COALESCE(MAX(IdHoSo), 0) AS maxIdHoSo FROM hosodangky`
+    );
+    const newIdHoSo = maxHoSoResult[0].maxIdHoSo + 1;
+
+    // Insert into HoSoDangKy
+    await database.query(
+      `INSERT INTO hosodangky (IdHoSo, IdCoSo, trangThai) VALUES (?, ?, ?)`,
+      [newIdHoSo, newIdCoSo, 'Chưa duyệt']
+    );
+
+    // Get the current maximum IdHoSo
+    const [maxGCNResult] = await database.query(
+      `SELECT COALESCE(MAX(IdGiayChungNhan), 0) AS maxIdGiayChungNhan FROM giaychungnhanattp`
+    );
+    const newgiaychungnhanattp = maxGCNResult[0].maxIdGiayChungNhan + 1;
+    await database.query(
+      `INSERT INTO giaychungnhanattp (IdGiayChungNhan, IdCoSo, NgayCapChungNhanATTP) VALUES (?, ?, ?)`,
+      [newgiaychungnhanattp, newIdCoSo, licenseIssueDate]
+    );
+
+    // Get the current maximum IdHoSo
+    const [maxChiTiet] = await database.query(
+      `SELECT COALESCE(MAX(IdChiTietKetQua), 0) AS maxIdChiTiet FROM ChiTietKetQua`
+    );
+    const newmaxChiTiet = maxChiTiet[0].maxIdChiTiet + 1;
+    await database.query(
+      `INSERT INTO ChiTietKetQua (IdChiTietKetQua) VALUES (?)`,
+      [newmaxChiTiet]
+    );
+
+    res.json({
+      success: true,
+      message: 'Form submitted successfully'
+    });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({
@@ -116,7 +159,6 @@ app.post('/api/submit-order', upload.single('file'), async (req, res) => {
     });
   }
 });
-
 
 
 

@@ -61,7 +61,7 @@ const login = async (req, res) => {
     }
 
     const user = await loginUser({ Username, PassWord });
-
+    console.log("Thông tin tài khoản", user)
     res.status(200).json({
       success: true,
       message: "User logged in successfully",
@@ -73,7 +73,7 @@ const login = async (req, res) => {
     if (error.message === 'Username and password are required.' || error.message === 'Invalid username or password.') {
       res.status(400).json({ success: false, message: error.message });
     } else {
-      res.status(500).json({ success: false, message: "Internal server error" });
+      res.status(500).json({ success: false, message: "Lỗi hãy thử lại" });
     }
   }
 };
@@ -88,18 +88,16 @@ const getDriverIdleController = async (req, res) => {
 }
 
 
-const deleteUserAccount = async (req,res) =>
-  {
-    const { id } = req.params;
-    try
-    {
-        await userService.deleteUserAccount(id);
-        res.json({ message: "User deleted successfully." });
-    }
-    catch (error) {
-        res.status(500).json({ message: "Error deleting User", error });
-      }
+const deleteUserAccount = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await userService.deleteUserAccount(id);
+    res.json({ message: "User deleted successfully." });
   }
+  catch (error) {
+    res.status(500).json({ message: "Error deleting User", error });
+  }
+}
 
 module.exports = {
   getUsers,

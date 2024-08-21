@@ -7,24 +7,33 @@ import {
   CButton,
   CCard,
   CCardBody,
+  CModal,
   CCardFooter,
   CCardGroup,
   CCardHeader,
   CCardImage,
   CCardLink,
   CCardSubtitle,
+  CModalHeader,
   CCardText,
   CCardTitle,
   CListGroup,
+  CFormInput,
   CListGroupItem,
+  CModalBody,
   CNav,
+  CFormCheck,
+  CModalTitle,
   CNavItem,
   CNavLink,
   CCol,
   CRow,
+  CModalFooter,
   CTable,
   CTableHead,
+  CForm,
   CTableRow,
+  CContainer,
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
@@ -42,6 +51,7 @@ const Carousels = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [dataNV, setDataNV] = useState([]);
   const [dataDriver, setDataDriver] = useState([])
+  const [visibleStatus, setVisibleStatus] = useState(false)
   const [dataEmployer, setDataEmployee] = useState([]);
 
 
@@ -59,7 +69,7 @@ const Carousels = () => {
 
 
 
-  const handelDeleteDriverByID = async (id,idTK) => {
+  const handelDeleteDriverByID = async (id, idTK) => {
     const userConfirmed = confirm(`Bạn có muốn khóa tài xế với ID : ${id}`);
     if (userConfirmed) {
       try {
@@ -137,7 +147,7 @@ const Carousels = () => {
         </CCardHeader>
         {/* Giữ nguyên nút thêm tài khoản */}
         <CButton color="primary">
-          <Link to="/base/Spinners" style={{ color: 'white', textDecoration: 'none' }}>+ Thêm tài khoản</Link>
+          <a onClick={() => setVisibleStatus(true)} style={{ color: 'white', textDecoration: 'none' }}>+ Tạo đoàn thẩm định</a>
         </CButton>
       </div>
       <CRow>
@@ -149,12 +159,12 @@ const Carousels = () => {
               <CTable>
                 <CTableHead>
                   <CTableRow>
-                    <CTableHeaderCell scope="col">Tên Tài Xế</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Số Điện Thoại</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Ngày Sinh</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Email</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Giới Tính</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Trạng thái</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Tên đoàn</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Kế hoạch</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Ngày thanh tra</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Giờ bắt đầu</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Cán bộ</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Chức vụ</CTableHeaderCell>
                     {/* Xem chi tiết chuyển đến /base/progress */}
                     <CTableHeaderCell scope="col">Tuỳ chọn</CTableHeaderCell>
                   </CTableRow>
@@ -188,8 +198,8 @@ const Carousels = () => {
                           <CDropdownToggle color="secondary">Tuỳ chọn</CDropdownToggle>
                           <CDropdownMenu>
                             {/* Xem chi tiết chuyển đến /base/progress */}
-                            <CDropdownItem><Link to ={`/base/Paginations/${item.PK_Id_TX}`} >Xem chi tiết</Link></CDropdownItem>
-                            <CDropdownItem onClick={()=> handelDeleteDriverByID(item.PK_Id_TX, item.Id_TaiKhoan)} > Khóa Tài Xế</CDropdownItem>
+                            <CDropdownItem><Link to={`/base/Paginations/${item.PK_Id_TX}`} >Xem chi tiết</Link></CDropdownItem>
+                            <CDropdownItem onClick={() => handelDeleteDriverByID(item.PK_Id_TX, item.Id_TaiKhoan)} > Khóa Tài Xế</CDropdownItem>
                             {/* Chỉnh sửa chuyển đến /base/progress */}
                             {/* <CDropdownItem><Link to="/base/progress">Chỉnh sửa</Link></CDropdownItem> */}
                             <CDropdownDivider />
@@ -207,51 +217,45 @@ const Carousels = () => {
       </CRow>
 
       <CRow>
-        <CCol xs={12}>
-          <CCard className="mb-4">
-            <CNav variant="underline-border">
-            </CNav>
-            <CCardBody>
-              <CTable>
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell scope="col">ID Tài Khoản</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">UserName</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Số Điện Thoại</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Role</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Trạng Thái</CTableHeaderCell>
-                    {/* Xem chi tiết chuyển đến /base/progress */}
-                    <CTableHeaderCell scope="col">Tuỳ chọn</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {dataEmployer.map((item, index) => (
-                    <CTableRow key={index}>
-                      <CTableDataCell>
-                        <span style={{ color: 'blue' }}>{item.PK_Id_TK}</span>
-                      </CTableDataCell>
-                      <CTableDataCell>{item.Username}</CTableDataCell>
-                      <CTableDataCell>{item.SDT}</CTableDataCell>
-                      <CTableDataCell style={{ color: 'blue' }}>{item.Ten_quyen}</CTableDataCell>
-                      <CTableDataCell>{   item.Trang_Thai==1 ? "Đang sử dụng " : "Đã Khóa"  }</CTableDataCell>
-                      {/* Tuỳ chọn */}
-                      <CTableDataCell>
-                        <CDropdown>
-                          <CDropdownToggle color="secondary">Tuỳ chọn</CDropdownToggle>
-                          <CDropdownMenu>
-                            <CDropdownItem onClick={() => handelDeleteEmployee(item.PK_Id_TK)} >Khóa Tài Khoản</CDropdownItem>
-                            <CDropdownDivider />
-                            <CDropdownItem></CDropdownItem>
-                          </CDropdownMenu>
-                        </CDropdown>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
-            </CCardBody>
-          </CCard>
-        </CCol>
+        <CModal
+          size="lg"
+          backdrop="static"
+          visible={visibleStatus}
+          onClose={() => setVisibleStatus(false)}
+          aria-labelledby="StaticBackdropExampleLabel"
+        >
+          <CModalHeader>
+            <CModalTitle id="StaticBackdropExampleLabel">Tạo kế hoạch thanh tra</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
+            <CContainer>
+              <CRow className=" justify-content-between">
+                <CForm>
+                  <CFormInput id="inputAddress" label="Nhập tên kế hoạch" />
+                  <CFormInput
+                    id="inputAddress"
+                    label="Ngày thanh tra"
+                    placeholder="Nhập ngày với định dạng: 2024-07-31"
+                  />
+                  <CFormInput
+                    id="inputAddress"
+                    label="Thời gian thanh tra"
+                    placeholder="Nhập thời gian với định dạng: 09:12"
+                  />
+                  <p>Chọn cơ sở muốn thanh tra</p>
+                  <CFormCheck id="flexCheckDefault" label="Cơ sở 1 - 12 Đống đa, Hà Nội" />
+                  <CFormCheck id="flexCheckDefault" label="Cơ sở 2 - 12 Đống đa, Hà Nội" />
+                </CForm>
+              </CRow>
+            </CContainer>
+          </CModalBody>
+          <CModalFooter>
+            <CButton color="primary">Tạo kế hoạch</CButton>
+            <CButton color="secondary" onClick={() => setVisibleStatus(false)}>
+              Đóng
+            </CButton>
+          </CModalFooter>
+        </CModal>
       </CRow>
     </>
   );
