@@ -61,6 +61,7 @@ const Tooltips = () => {
         console.error('Từ chối hồ sơ thất bại:', res.data)
       }
     } catch (error) {
+      alert('Bạn phải tạo kế hoạch thanh tra trước ')
       console.log('Lỗi khi từ chối hồ sơ:', error)
     }
   }

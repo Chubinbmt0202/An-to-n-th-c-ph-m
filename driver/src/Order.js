@@ -50,7 +50,7 @@ export default function Order() {
             const result = await response.json();
             // Handle the result from the backend
             alert("Tạo đăng ký thành công")
-            window.location.href = `/home`;
+            window.location.href = `/`;
         } catch (error) {
             console.error('Error:', error);
         }

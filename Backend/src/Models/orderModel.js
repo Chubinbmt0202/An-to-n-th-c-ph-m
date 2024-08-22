@@ -77,7 +77,7 @@ const rejectOrderModel = async (idHoSo, noiDungTuChoi, nguoiXuLy, idXuLyViPham) 
   try {
     // Lấy IdChiTietKetQua từ IdHoSo
     const queryIdChiTietKetQua = `
-      SELECT IdChiTietKetQua 
+      SELECT IdChiTietKetQua
       FROM ChiTietKetQua 
       WHERE IdKeHoach = (
         SELECT IdKeHoach 
@@ -100,7 +100,7 @@ const rejectOrderModel = async (idHoSo, noiDungTuChoi, nguoiXuLy, idXuLyViPham) 
       INSERT INTO XuLyViPham (IdXuLyViPham, IdChiTietKetQua, NgayXuLy, NguoiXuLy, NoiDungXuLy, TrangThai)
       VALUES (?, ?, NOW(), ?, ?, 2)
     `;
-    await db.query(queryInsert, [idXuLyViPham, idChiTietKetQua, nguoiXuLy, noiDungTuChoi]);
+    await db.query(queryInsert, [idChiTietKetQua, idChiTietKetQua, nguoiXuLy, noiDungTuChoi]);
 
     // Cập nhật trạng thái của bảng HoSoDangKy
     const queryUpdateStatus = `
@@ -115,9 +115,37 @@ const rejectOrderModel = async (idHoSo, noiDungTuChoi, nguoiXuLy, idXuLyViPham) 
   }
 };
 
-const createFileModel = async () => {
+const createKeHoach = async (ThoiGianBatDau, IdCoSo, NoiDung) => {
+  try {
+    const [maxKehoachResult] = await db.query(
+      `SELECT COALESCE(MAX(IdKeHoach), 0) AS maxIDkehoach FROM kehoach`
+    );
+    const newIdHoSo = maxKehoachResult[0].maxIDkehoach + 1;
 
+    const query = `INSERT INTO kehoach (IdKeHoach, ThoiGianBatDau, IdCoSo, NoiDung) 
+        VALUES (?, ?, ?, ?)`;
+
+    const [rows, fields] = await db.query(query, [newIdHoSo, ThoiGianBatDau, IdCoSo, NoiDung]);
+    return rows;
+  } catch (error) {
+    throw error
+  }
 };
+
+const updateIDKehoach = async () => {
+  try {
+    const [maxKehoachResult] = await db.query(
+      `SELECT COALESCE(MAX(IdKeHoach), 0) AS maxIDkehoach FROM chitietketqua`
+    );
+    const newIdHoSo = maxKehoachResult[0].maxIDkehoach + 1;
+    console.log("IdKeHoach", newIdHoSo)
+    const query = "UPDATE ChiTietKetQua SET IdKeHoach = ? WHERE IdChiTietKetQua = ?";
+    const [rows, fields] = await db.query(query, [newIdHoSo, newIdHoSo]);
+    return rows
+  } catch (error) {
+    throw error
+  }
+}
 
 // Order Model
 const updateOrderDeliveryDate = async (PK_Id_DonHang, Ngay_DH) => {
@@ -248,7 +276,8 @@ module.exports = {
   getOrderDetailFinished,
   addVehicleId,
   updateOrderDriverID,
+  updateIDKehoach,
   updateOrderDriver,
   rejectOrderModel,
-  createFileModel
+  createKeHoach,
 };

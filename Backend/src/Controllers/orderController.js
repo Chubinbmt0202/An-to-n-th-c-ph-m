@@ -81,6 +81,30 @@ const getOrderFileUpdate = async (req, res) => {
     }
 }
 
+const createKehoach = async (req, res) => {
+    try {
+        const { ThoiGianBatDau, IdCoSo, TenKeHoach } = req.body
+        const kehoach = await orderService.orderKehoach(ThoiGianBatDau, IdCoSo, TenKeHoach)
+        console.log("Dữ liệu người dùng gửi", req.body)
+        res.json(kehoach)
+    } catch (error) {
+        console.log("Lỗi quần què gì đó ở controller", error)
+        throw error
+    }
+}
+
+const updateChiTiet = async (req, res) => {
+    try {
+        const { ThoiGianBatDau, IdCoSo } = req.body
+        const idChitiet = await orderService.orderKehoach2()
+        console.log("Dữ liệu người dùng gửi để update idChitiet", req.body)
+        res.json(idChitiet)
+    } catch (error) {
+        console.log("Lỗi quần quề gì đó khi update idchitiet")
+        throw error
+    }
+}
+
 const rejectOrderControllerV = async (req, res) => {
     const { id } = req.params; // Lấy idHoSo từ URL parameters
     const { noiDungTuChoi, nguoiXuLy } = req.body; // Lấy thông tin từ body
@@ -119,5 +143,7 @@ module.exports = {
     getOrderFileUpdate,
     rejectOrderControllerV,
     reasonRejectController,
-    createFile
+    createFile,
+    updateChiTiet,
+    createKehoach
 };

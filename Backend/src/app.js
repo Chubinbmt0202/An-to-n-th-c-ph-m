@@ -16,7 +16,7 @@ const {
   getVehicleIdleController,
 } = require("./Controllers/trafficController.js");
 const { getAllVehicleTypes } = require("./Controllers/typesVehicleController.js");
-const { getAllOrders, rejectOrderControllerV, reasonRejectController, getDetailOrderByID, updateOrderController, getOrderByIdKH, getOrderDetailFinishedController, getOrderFileUpdate } = require("./Controllers/orderController.js");
+const { getAllOrders, rejectOrderControllerV, updateChiTiet, reasonRejectController, getDetailOrderByID, updateOrderController, createKehoach, getOrderByIdKH, getOrderDetailFinishedController, getOrderFileUpdate } = require("./Controllers/orderController.js");
 const { getAllCustomersController, getinforCustomerByID } = require("./Controllers/CustomerController.js");
 const { getAllDataShipper } = require("./Controllers/ChartController.js")
 const { getAllDriver, getAllEmployee, updateEmployee, addDriver, getInforDriverByID, updateDriverByID } = require("./Controllers/employeeController.js")
@@ -159,9 +159,29 @@ app.post('/api/submit-order', upload.single('file'), async (req, res) => {
     });
   }
 });
+app.post('/api/createKehoach', createKehoach)
+app.post('/api/updateIDChiTiet', updateChiTiet)
+app.get('/api/getallThanhTra', async (req, res) => {
+  try {
+    const query = `
+            SELECT 
+                k.NoiDung AS 'Tên kế hoạch', 
+                k.ThoiGianBatDau AS 'Ngày thanh tra',
+                DATE_FORMAT(k.ThoiGianBatDau, '%H:%i') AS 'Giờ bắt đầu',
+                c.TenCoSo AS 'Cơ sở thanh tra'
+            FROM 
+                kehoach k
+            JOIN 
+                coso c ON k.IdCoSo = c.IdCoSo; 
+        `;
 
-
-
+    const [results, fields] = await database.query(query);
+    res.json(results); // Trả về kết quả dưới dạng JSON
+  } catch (error) {
+    console.error('Lỗi khi lấy danh sách thanh tra:', error);
+    res.status(500).json({ error: 'Đã xảy ra lỗi khi lấy danh sách thanh tra' });
+  }
+});
 
 // khách hàng
 app.get("/api/getAllCustomers", getAllCustomersController);

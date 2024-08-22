@@ -104,8 +104,32 @@ const getOrderUpdateFile = async (id) => {
     }
 }
 
+const orderKehoach = async (ThoiGianBatDau, IdCoSo, NoiDung) => {
+    try {
+        const dataKehoach = await orderModel.createKeHoach(ThoiGianBatDau, IdCoSo, NoiDung)
+        console.log("Data ke hoach", dataKehoach)
+        return dataKehoach
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+const orderKehoach2 = async () => {
+    try {
+        const dataKehoach = await orderModel.updateIDKehoach()
+        console.log("Data update", dataKehoach)
+        return dataKehoach
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
 module.exports = {
     getAllOrders,
+    orderKehoach2,
+    orderKehoach,
     getDetailOrderByID,
     updateOrder,
     getOrderByIdKH,

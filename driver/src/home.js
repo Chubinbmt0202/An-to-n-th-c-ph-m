@@ -85,7 +85,7 @@ export default function Home() {
         setError("Invalid phone number or password");
       }
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError("Đăng nhập không thành công");
     }
   };
 
@@ -221,7 +221,7 @@ export default function Home() {
                         alt="Your Company"
                       />
                       <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Đăng nhập với tài khoản tài xế
+                        Đăng nhập
                       </h2>
                     </div>
 
@@ -232,7 +232,7 @@ export default function Home() {
                             htmlFor="SDT"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            Số điện thoại
+                            Nhập căn cước công dân
                           </label>
                           <div className="mt-2">
                             <input
