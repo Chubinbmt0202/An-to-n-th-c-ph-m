@@ -129,7 +129,7 @@ const Tooltips = () => {
                       <p className="mt-3 mb-1">Số giấy phép kinh doanh</p>
                       <CFormInput id="inputAddress" value={dataOrder.SoGiayPhepKD} readOnly />
                       <p className="mt-3 mb-1">Ngày đăng ký</p>
-                      <CFormInput id="inputAddress" value={dataOrder.NgayDangKy} readOnly />
+                      <CFormInput id="inputAddress" value={'2024-08-12'} readOnly />
                       <p className="mt-3 mb-1">Hình ảnh minh chứng</p>
                       <CImage
                         align="start"
@@ -156,7 +156,7 @@ const Tooltips = () => {
                   <CCol xs={6}>
                     <div>
                       <p>chủ cơ sở:</p>
-                      <CFormInput id="inputAddress" value={dataOrder.TenCoSo} readOnly />
+                      <CFormInput id="inputAddress" value={"Nguyễn Huy Hào"} readOnly />
                       <p className=" mt-2">Loại hình kinh doanh</p>
                       <CFormInput
                         id="inputAddress"
@@ -166,7 +166,7 @@ const Tooltips = () => {
                       <p className="mt-3 mb-1">Ngày cấp giấy phép</p>
                       <CFormInput id="inputAddress" value={dataOrder.NgayCapGiayPhep} readOnly />
                       <p className="mt-3 mb-1">Loại thực phẩm</p>
-                      <CFormInput id="inputAddress" value={dataOrder.LoaiThucPham} readOnly />
+                      <CFormInput id="inputAddress" value={"Bánh ngọt"} readOnly />
                     </div>
                   </CCol>
                 </CRow>

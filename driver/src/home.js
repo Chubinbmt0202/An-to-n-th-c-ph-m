@@ -163,6 +163,10 @@ export default function Home() {
     window.location.href = `/createOrder`;
   };
 
+  const handleMoveB = () => {
+    window.location.href = `/phananh`;
+  };
+
   return (
     <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -179,14 +183,19 @@ export default function Home() {
               : `Đang giao đơn hàng với ID là:`}
           </p>
           {isLoggedIn && (
-            <button onClick={handleLogout} className="text-black bg-slate-50 mr-4">
+            <button onClick={handleLogout} className="text-black bg-slate-50 mr-4 mb-3">
               Đăng xuất
             </button>
           )}
-          <button onClick={handleMove} className="text-black bg-slate-50">
-            Tạo đơn đăng ký an toàn thực phẩm
-          </button>
+
+
         </div>
+        <button onClick={handleMove} className="text-black bg-slate-50 mr-6">
+          Tạo đơn đăng ký an toàn thực phẩm
+        </button>
+        <button onClick={handleMoveB} className="text-black bg-slate-50">
+          Phản ánh an toàn thực phẩm
+        </button>
       </div>
 
       <Transition show={open}>

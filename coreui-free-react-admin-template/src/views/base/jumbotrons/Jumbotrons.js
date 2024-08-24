@@ -1,56 +1,129 @@
 import React from 'react'
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CRow } from '@coreui/react'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CModalTitle,
+  CContainer,
+  CForm,
+  CModalFooter,
+  CRow,
+  CModalBody,
+  CFormTextarea,
+  CFormInput,
+  CModalHeader,
+  CImage,
+  CModal,
+} from '@coreui/react'
 import { DocsLink } from 'src/components'
 
 const Jumbotrons = () => {
   return (
     <>
-      <CCard className="mb-4">
-        <CCardHeader>
-          Jumbotron
-          <DocsLink name="CJumbotron" />
-        </CCardHeader>
-        <CCardBody>
-          <CContainer className="py-5" fluid>
-            <h1 className="display-5 fw-bold">Custom jumbotron</h1>
-            <p className="col-md-8 fs-4">
-              Using a series of utilities, you can create this jumbotron, just like the one in
-              previous versions of Bootstrap. Check out the examples below for how you can remix and
-              restyle it to your liking.
-            </p>
-            <CButton color="primary" size="lg">
-              Example button
+      <CRow>
+        <CCol xs={12}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>Xem chi tiết hồ sơ:</strong> <small>{OrderID}</small>
+            </CCardHeader>
+            {dataFile && (
+              <CCardBody>
+                <CContainer>
+                  <CRow>
+                    <CCol xs={6}>
+                      <div>
+                        <p>Tên cơ sở:</p>
+                        <CFormInput id="inputAddress" value={dataFile.TenCoSo} readOnly />
+                        <p className="mt-2">Địa chỉ</p>
+                        <CFormInput id="inputAddress" value={dataFile.DiaChi} readOnly />
+                        <p className="mt-3 mb-1">Số giấy phép kinh doanh</p>
+                        <CFormInput id="inputAddress" value={dataFile.SoGiayPhepKD} readOnly />
+                        <p className="mt-3 mb-1">Ngày đăng ký</p>
+                        <CFormInput id="inputAddress" value={dataFile.NgayDangKy} readOnly />
+                        <p className="mt-3 mb-1">Hình ảnh minh chứng</p>
+                        <CImage
+                          align="start"
+                          rounded
+                          src="/images/react400.jpg"
+                          width={200}
+                          height={200}
+                        />
+                        <div className="mt-3">
+                          <CButton
+                            color="primary"
+                            className="ml-1"
+                            onClick={() => handleViewStatus()}
+                          >
+                            Yêu cầu bổ sung
+                          </CButton>
+                        </div>
+                      </div>
+                    </CCol>
+
+                    <CCol xs={6}>
+                      <div>
+                        <p>chủ cơ sở:</p>
+                        <CFormInput id="inputAddress" value={dataFile.TenCoSo} readOnly />
+                        <p className=" mt-2">Loại hình kinh doanh</p>
+                        <CFormInput
+                          id="inputAddress"
+                          value={dataFile.TenLoaiHinhKinhDoanh}
+                          readOnly
+                        />
+                        <p className="mt-3 mb-1">Ngày cấp giấy phép</p>
+                        <CFormInput id="inputAddress" value={dataFile.NgayCapGiayPhep} readOnly />
+                        <p className="mt-3 mb-1">Loại thực phẩm</p>
+                        <CFormInput id="inputAddress" value={dataFile.LoaiThucPham} readOnly />
+                        {/* <CFormInput
+                        id="inputAddress"
+                        className=" mb-3"
+                        value={shippingService}
+                        readOnly
+                      /> */}
+                      </div>
+                    </CCol>
+                  </CRow>
+                </CContainer>
+              </CCardBody>
+            )}
+          </CCard>
+        </CCol>
+        <CModal
+          size="lg"
+          backdrop="static"
+          visible={visibleStatus}
+          onClose={() => setVisibleStatus(false)}
+          aria-labelledby="StaticBackdropExampleLabel"
+        >
+          <CModalHeader>
+            <CModalTitle id="StaticBackdropExampleLabel">Yêu cầu bổ sung</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
+            <CContainer>
+              <CRow className=" justify-content-between">
+                <CForm>
+                  <CFormTextarea
+                    id="exampleFormControlTextarea1"
+                    label="Nhập nội dung yêu cầu bổ sung"
+                    rows={6}
+                    text="Must be 8-20 words long."
+                  ></CFormTextarea>
+                </CForm>
+              </CRow>
+            </CContainer>
+          </CModalBody>
+          <CModalFooter>
+            <CButton color="primary" onClick={() => setVisibleStatus(false)}>
+              Xác nhận
             </CButton>
-          </CContainer>
-          <CRow className="align-items-md-stretch">
-            <CCol md={6}>
-              <div className="h-100 p-5 text-white bg-dark rounded-3">
-                <h2>Change the background</h2>
-                <p>
-                  Swap the background-color utility and add a `.text-*` color utility to mix up the
-                  jumbotron look. Then, mix and match with additional component themes and more.
-                </p>
-                <CButton color="light" variant="outline">
-                  DocsExample button
-                </CButton>
-              </div>
-            </CCol>
-            <CCol md={6}>
-              <div className="h-100 p-5 bg-light border rounded-3">
-                <h2>Add borders</h2>
-                <p>
-                  Or, keep it light and add a border for some added definition to the boundaries of
-                  your content. Be sure to look under the hood at the source HTML here as we&#39;ve
-                  adjusted the alignment and sizing of both column&#39;s content for equal-height.
-                </p>
-                <CButton color="secondary" variant="outline">
-                  DocsExample button
-                </CButton>
-              </div>
-            </CCol>
-          </CRow>
-        </CCardBody>
-      </CCard>
+            <CButton color="secondary" onClick={() => setVisibleStatus(false)}>
+              Đóng
+            </CButton>
+          </CModalFooter>
+        </CModal>
+      </CRow>
     </>
   )
 }

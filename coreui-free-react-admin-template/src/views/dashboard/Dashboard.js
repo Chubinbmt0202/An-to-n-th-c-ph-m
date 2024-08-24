@@ -95,31 +95,30 @@ const Dashboard = () => {
     downloadLink.remove();
   }
 
-  const handleExportOderData = async () =>
-    {
-      try {
-        
-        const res = await axios.get('http://localhost:3001/api/getAllOrders');
-        console.log(res.data)
-        const worksheet = XLSX.utils.json_to_sheet(res.data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "ReportOrder");
-        const excelBlob = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-        const blob = new Blob([excelBlob], { type: "application/octet-stream" });
-        const url = URL.createObjectURL(blob);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = url;
-        downloadLink.download = "report.xlsx";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        URL.revokeObjectURL(url);
-        downloadLink.remove();
+  const handleExportOderData = async () => {
+    try {
 
-      } catch (error) {
-        console.log(error);
-      }
-     
+      const res = await axios.get('http://localhost:3001/api/getAllOrders');
+      console.log(res.data)
+      const worksheet = XLSX.utils.json_to_sheet(res.data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "ReportOrder");
+      const excelBlob = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBlob], { type: "application/octet-stream" });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = "report.xlsx";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      URL.revokeObjectURL(url);
+      downloadLink.remove();
+
+    } catch (error) {
+      console.log(error);
     }
+
+  }
 
 
   const progressGroupExample1 = [
@@ -247,7 +246,7 @@ const Dashboard = () => {
               </h4>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
-            <CButton onClick={() => handleExportOderData()} color="primary" className="float-end">
+              <CButton onClick={() => handleExportOderData()} color="primary" className="float-end">
                 <CIcon icon={cilCloudDownload} />
               </CButton>
               {/* <CButton color="primary" className="float-end">
@@ -270,122 +269,6 @@ const Dashboard = () => {
           <MainChart />
         </CCardBody>
       </CCard>
-
-      <CRow>
-        <CCol xs>
-          <CCard className="mb-4">
-            <CCardHeader>Thống Kê Tài Xế
-              <CButton onClick={() => handleExportDataShipper()} color="primary" className="float-end">
-                <CIcon icon={cilCloudDownload} />
-              </CButton></CCardHeader>
-
-            <CCardBody>
-              {/* <CRow>
-                <CCol xs={12} md={6} xl={6}>
-                  <CRow>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-info py-1 px-3">
-                        <div className="text-body-secondary text-truncate small">New Clients</div>
-                        <div className="fs-5 fw-semibold">9,123</div>
-                      </div>
-                    </CCol>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                        <div className="text-body-secondary text-truncate small">
-                          Recurring Clients
-                        </div>
-                        <div className="fs-5 fw-semibold">22,643</div>
-                      </div>
-                    </CCol>
-                  </CRow>
-                  <hr className="mt-0" />
-                  {progressGroupExample1.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-prepend">
-                        <span className="text-body-secondary small">{item.title}</span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="info" value={item.value1} />
-                        <CProgress thin color="danger" value={item.value2} />
-                      </div>
-                    </div>
-                  ))}
-                </CCol>
-                <CCol xs={12} md={6} xl={6}>
-                  <CRow>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
-                        <div className="text-body-secondary text-truncate small">Pageviews</div>
-                        <div className="fs-5 fw-semibold">78,623</div>
-                      </div>
-                    </CCol>
-                    <CCol xs={6}>
-                      <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                        <div className="text-body-secondary text-truncate small">Organic</div>
-                        <div className="fs-5 fw-semibold">49,123</div>
-                      </div>
-                    </CCol>
-                  </CRow>
-
-                  <hr className="mt-0" />
-
-                  {progressGroupExample2.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">{item.value}%</span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="warning" value={item.value} />
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="mb-5"></div>
-                </CCol>
-              </CRow> */}
-
-              <br />
-
-              <CTable align="middle" className="mb-0 border" hover responsive>
-                <CTableHead className="text-nowrap">
-                  <CTableRow>
-                    <CTableHeaderCell className="bg-body-tertiary text-center">
-                      Tên Tài Xế
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary">Số Điện Thoại</CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary text-center">
-                      Email
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="bg-body-tertiary">Số Đơn Dã Chạy</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {reportShipers.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell className="text-center">
-                        {item.TenTX}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        {item.SDT}
-
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        {item.Email}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        {item.SoLuongDaChay}
-
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
     </>
   )
 }

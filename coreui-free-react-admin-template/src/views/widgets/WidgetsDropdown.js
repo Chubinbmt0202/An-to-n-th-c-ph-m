@@ -19,27 +19,25 @@ import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 const WidgetsDropdown = (props) => {
   const widgetChartRef1 = useRef(null)
   const widgetChartRef2 = useRef(null)
-  const [sumtotal,setSumTotal] = useState(0);
-  const [countoder,setCountOder] = useState(0);
+  const [sumtotal, setSumTotal] = useState(0);
+  const [countoder, setCountOder] = useState(0);
 
 
-  const fetchDataTotal = async () =>
-    {
-      const res = await axios.get('http://localhost:3001/api/getAllOrders')
-      
-      let sum = 0;
-      for(var i=0 ;i<res.data.length ;i++)
-        {
-          sum = sum + Number(res.data[i].TongTien);
-         
-        }
-      setSumTotal(sum.toFixed(1));
-      setCountOder(res.data.length);
-   
-    
+  const fetchDataTotal = async () => {
+    const res = await axios.get('http://localhost:3001/api/getAllOrders')
+
+    let sum = 0;
+    for (var i = 0; i < res.data.length; i++) {
+      sum = sum + Number(res.data[i].TongTien);
+
     }
+    setSumTotal(sum.toFixed(1));
+    setCountOder(res.data.length);
 
-    
+
+  }
+
+
 
 
 
@@ -64,11 +62,11 @@ const WidgetsDropdown = (props) => {
     //   fetchSumTotal();
     // })
     fetchDataTotal()
-  }, [widgetChartRef1, widgetChartRef2,sumtotal])
+  }, [widgetChartRef1, widgetChartRef2, sumtotal])
 
   return (
     <CRow className={props.className} xs={{ gutter: 4 }}>
-       {/* <CCol sm={6} xl={4} xxl={3}>
+      {/* <CCol sm={6} xl={4} xxl={3}>
         <CWidgetStatsA
           color="primary"
           value={
@@ -252,21 +250,19 @@ const WidgetsDropdown = (props) => {
           color="warning"
           value={
             <>
-              {countoder}{' Đơn Hàng'}
-             
+              {countoder}{' Hồ sơ'}
+
             </>
           }
-          title="Số lượng đơn hàng trong quý"
+          title="Số lượng hồ sơ đã gửi"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="text-white p-0">
                 <CIcon icon={cilOptions} />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <CDropdownItem>Xem thông tin chi tiết</CDropdownItem>
+                <CDropdownItem>Tải xuống file excel</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
           }
@@ -316,27 +312,25 @@ const WidgetsDropdown = (props) => {
             />
           }
         />
-      </CCol> 
+      </CCol>
       <CCol sm={6} xl={4} xxl={3}>
         <CWidgetStatsA
           color="danger"
           value={
             <>
-              {sumtotal}{'   Triệu'}
+              {sumtotal}{'   Cơ sở vi phạm'}
 
             </>
           }
-          title="Tổng Doanh Thu trong quý"
+          title="Tất cả cơ sở vi phạm"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="text-white p-0">
                 <CIcon icon={cilOptions} />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <CDropdownItem>Xem thông tin chi tiết</CDropdownItem>
+                <CDropdownItem>Tải xuống file excel</CDropdownItem>
               </CDropdownMenu>
             </CDropdown>
           }

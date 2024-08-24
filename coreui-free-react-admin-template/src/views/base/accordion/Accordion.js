@@ -158,6 +158,11 @@ const Accordion = () => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   };
+
+  const ChuCoSo = {
+    nameHost: ['Nguyễn Văn A', 'Nguyễn Thị B', 'Trần Văn C', 'Nguyễn Huy Hào'],
+  }
+
   return (
     <>
       <div
@@ -179,7 +184,7 @@ const Accordion = () => {
             <CFormInput
               type="text"
               id="inputPassword2"
-              placeholder="Tìm kiếm đơn hàng"
+              placeholder="Tìm kiếm hồ sơ"
               onChange={handleSearchChange}
             />
           </CCol>
@@ -244,50 +249,53 @@ const Accordion = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {allOrders.map((item, index) => (
-                    <CTableRow key={item.IdHoSo}>
-                      <CTableHeaderCell scope="row">{item.IdHoSo}</CTableHeaderCell>
-                      <CTableDataCell>{item.TenCoSo}</CTableDataCell>
-                      <CTableDataCell>{item.DiaChi}</CTableDataCell>
-                      <CTableDataCell>{ }</CTableDataCell>
-                      <CTableDataCell
-                        style={{
-                          color:
-                            item.trangThai === 'Đã duyệt'
-                              ? 'green'
-                              : item.trangThai === 'Từ chối'
-                                ? 'red'
-                                : 'gray',
-                        }}
-                      >
-                        {item.trangThai}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <CDropdown>
-                          <CDropdownToggle color="secondary">Tuỳ chỉnh</CDropdownToggle>
-                          <CDropdownMenu>
-                            {item.trangThai === 'Chưa duyệt' && (
-                              <>
-                                <CDropdownItem onClick={() => handleProcessOrder(item.IdHoSo)}>
-                                  Xử lý
+                  {allOrders.map((item, index) => {
+                    const chuCoSoHienTai = ChuCoSo.nameHost[index]
+                    return (
+                      <CTableRow key={item.IdHoSo}>
+                        <CTableHeaderCell scope="row">{item.IdHoSo}</CTableHeaderCell>
+                        <CTableDataCell>{item.TenCoSo}</CTableDataCell>
+                        <CTableDataCell>{item.DiaChi}</CTableDataCell>
+                        <CTableDataCell>{chuCoSoHienTai}</CTableDataCell>
+                        <CTableDataCell
+                          style={{
+                            color:
+                              item.trangThai === 'Đã duyệt'
+                                ? 'green'
+                                : item.trangThai === 'Từ chối'
+                                  ? 'red'
+                                  : 'gray',
+                          }}
+                        >
+                          {item.trangThai}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <CDropdown>
+                            <CDropdownToggle color="secondary">Tuỳ chỉnh</CDropdownToggle>
+                            <CDropdownMenu>
+                              {item.trangThai === 'Chưa duyệt' && (
+                                <>
+                                  <CDropdownItem onClick={() => handleProcessOrder(item.IdHoSo)}>
+                                    Xử lý
+                                  </CDropdownItem>
+                                </>
+                              )}
+                              {item.trangThai === 'Từ chối' && (
+                                <CDropdownItem onClick={() => handleViewStatusReason(item.IdHoSo)}>
+                                  Xem trạng thái
                                 </CDropdownItem>
-                              </>
-                            )}
-                            {item.trangThai === 'Từ chối' && (
-                              <CDropdownItem onClick={() => handleViewStatusReason(item.IdHoSo)}>
-                                Xem trạng thái
-                              </CDropdownItem>
-                            )}
-                            {item.trangThai === 'Đã duyệt' && (
-                              <CDropdownItem onClick={() => handleDetailOrder(item.IdHoSo)}>
-                                Xem chi tiết
-                              </CDropdownItem>
-                            )}
-                          </CDropdownMenu>
-                        </CDropdown>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
+                              )}
+                              {item.trangThai === 'Đã duyệt' && (
+                                <CDropdownItem onClick={() => handleDetailOrder(item.IdHoSo)}>
+                                  Xem chi tiết
+                                </CDropdownItem>
+                              )}
+                            </CDropdownMenu>
+                          </CDropdown>
+                        </CTableDataCell>
+                      </CTableRow>
+                    )
+                  })}
                 </CTableBody>
               </CTable>
             </CCardBody>

@@ -54,7 +54,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Quản lý hồ sơ',
+        name: 'Xác nhận hồ sơ đăng ký',
         to: '/base/accordion',
       },
       {
@@ -64,21 +64,40 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: ' Kế hoạch thanh tra',
+        name: ' Lập kế hoạch thanh tra',
         to: '/base/collapses',
       },
       {
         component: CNavItem,
-        name: 'Đoàn thẩm định',
+        name: 'Lập đoàn thẩm định',
         to: '/base/carousels',
       },
+      {
+        component: CNavItem,
+        name: 'Đăng tin tức',
+        to: '/base/spinners',
+      },
+      {
+        component: CNavItem,
+        name: 'Lập biên bản xử lý',
+        to: '/base/paginations',
+      },
+      {
+        component: CNavItem,
+        name: 'Kết quả kiểm tra ATTP',
+        to: '/base/navs',
+      },
+      {
+        component: CNavItem,
+        name: 'Danh sách vi phạm ',
+        to: '/base/navs',
+      },
+      {
+        component: CNavItem,
+        name: 'Thông báo xử lý vi phạm',
+        to: '/base/navs',
+      },
     ],
-  },
-  {
-    component: CNavItem,
-    name: 'Báo cáo  thống kê',
-    to: '/charts',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
 ]
 

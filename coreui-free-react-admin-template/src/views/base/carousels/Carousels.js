@@ -165,7 +165,6 @@ const Carousels = () => {
                     <CTableHeaderCell scope="col">Giờ bắt đầu</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Cán bộ</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Chức vụ</CTableHeaderCell>
-                    {/* Xem chi tiết chuyển đến /base/progress */}
                     <CTableHeaderCell scope="col">Tuỳ chọn</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -225,32 +224,33 @@ const Carousels = () => {
           aria-labelledby="StaticBackdropExampleLabel"
         >
           <CModalHeader>
-            <CModalTitle id="StaticBackdropExampleLabel">Tạo kế hoạch thanh tra</CModalTitle>
+            <CModalTitle id="StaticBackdropExampleLabel">Tạo đoàn thẩm định</CModalTitle>
           </CModalHeader>
           <CModalBody>
             <CContainer>
               <CRow className=" justify-content-between">
                 <CForm>
-                  <CFormInput id="inputAddress" label="Nhập tên kế hoạch" />
+                  <CFormInput id="inputAddress" label="Nhập tên đoàn thẩm định" />
+                  <CFormInput id="inputAddress" label="Chọn kế hoạch" />
                   <CFormInput
                     id="inputAddress"
-                    label="Ngày thanh tra"
+                    label="Ngày thẩm định"
                     placeholder="Nhập ngày với định dạng: 2024-07-31"
                   />
                   <CFormInput
                     id="inputAddress"
-                    label="Thời gian thanh tra"
+                    label="Giờ bắt đầu"
                     placeholder="Nhập thời gian với định dạng: 09:12"
                   />
-                  <p>Chọn cơ sở muốn thanh tra</p>
-                  <CFormCheck id="flexCheckDefault" label="Cơ sở 1 - 12 Đống đa, Hà Nội" />
-                  <CFormCheck id="flexCheckDefault" label="Cơ sở 2 - 12 Đống đa, Hà Nội" />
+                  <p>Chọn cán bộ</p>
+                  <CFormCheck id="flexCheckDefault" label="Nguyễn Văn A - Trưởng đoàn" />
+                  <CFormCheck id="flexCheckDefault" label="Trần Thị B - Thanh tra" />
                 </CForm>
               </CRow>
             </CContainer>
           </CModalBody>
           <CModalFooter>
-            <CButton color="primary">Tạo kế hoạch</CButton>
+            <CButton color="primary">Tạo đoàn thẩm định</CButton>
             <CButton color="secondary" onClick={() => setVisibleStatus(false)}>
               Đóng
             </CButton>
